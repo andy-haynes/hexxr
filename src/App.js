@@ -23,10 +23,11 @@ export default function App() {
       // in this case, we only care to query the contract when signed in
       if (window.walletConnection.isSignedIn()) {
 
+          console.warn({ contract: window.contract });
         // window.contract is set by initContract in index.js
-        window.contract.getGreeting({ accountId: window.accountId })
-          .then(greetingFromContract => {
-            setGreeting(greetingFromContract)
+        window.contract.viewCastSpells()
+          .then((spells) => {
+            console.warn({ spells });
           })
       }
     },
@@ -96,7 +97,7 @@ export default function App() {
 
           try {
             // make an update call to the smart contract
-            await window.contract.setGreeting({
+            await window.contract.castSpell({
               // pass the value that the user entered in the greeting field
               message: newGreeting
             })

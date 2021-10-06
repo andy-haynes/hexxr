@@ -12,9 +12,21 @@
  *
  */
 
-import { Context, logging, storage } from 'near-sdk-as'
+import { Context, logging, PersistentMap, PersistentVector, storage } from 'near-sdk-as'
 
 const DEFAULT_MESSAGE = 'Hello'
+
+@nearBindgen
+class Spell {
+  caster: string;
+  // target: string;
+  // id: string;
+  constructor(public id: string, public target: string) {
+    this.caster = Context.sender;
+  }
+}
+
+const spells = new PersistentVector<Spell>('hexxr');
 
 // Exported functions will be part of the public interface for your smart contract.
 // Feel free to extract behavior to non-exported functions!
@@ -37,4 +49,13 @@ export function setGreeting(message: string): void {
   )
 
   storage.set(account_id, message)
+}
+
+export function castSpell(targetAccountId: string, spellId: string): void {
+  const spell = new Spell(spellId, targetAccountId);
+  spells.push(spell);
+}
+
+export function viewCastSpells(): PersistentVector<Spell> {
+  return spells;
 }
