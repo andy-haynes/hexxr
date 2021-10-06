@@ -46779,7 +46779,10 @@ function App() {
   _react.default.useEffect(() => {
     // in this case, we only care to query the contract when signed in
     if (window.walletConnection.isSignedIn()) {
-      // window.contract is set by initContract in index.js
+      console.warn({
+        contract: window.contract
+      }); // window.contract is set by initContract in index.js
+
       window.contract.viewCastSpells().then(spells => {
         console.warn({
           spells
@@ -46958,7 +46961,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63220" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50300" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
