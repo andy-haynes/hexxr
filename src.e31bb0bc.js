@@ -46780,10 +46780,10 @@ function App() {
     // in this case, we only care to query the contract when signed in
     if (window.walletConnection.isSignedIn()) {
       // window.contract is set by initContract in index.js
-      window.contract.getGreeting({
-        accountId: window.accountId
-      }).then(greetingFromContract => {
-        setGreeting(greetingFromContract);
+      window.contract.viewCastSpells().then(spells => {
+        console.warn({
+          spells
+        });
       });
     }
   }, // The second argument to useEffect tells React when to re-run the effect
@@ -46835,7 +46835,7 @@ function App() {
 
         try {
           // make an update call to the smart contract
-          await window.contract.setGreeting({
+          await window.contract.castSpell({
             // pass the value that the user entered in the greeting field
             message: newGreeting
           });
@@ -46958,7 +46958,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54144" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62650" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
